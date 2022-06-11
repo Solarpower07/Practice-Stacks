@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Current Spots - Unnamed prototype</title>
+        <link rel="stylesheet", href="./themes/core.css">
+    </head>
+    <body>
+        <div class="navbar">
+            
+        </div>
+        <div class="mainpage-content">
+            <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+            <a ></a>
+            <script type="text/javascript" src="./js/youtube_api/core.js"></script>
+            <input type="url" placeholder="Enter url..." id="add_url_entry">
+            <button onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
+            <script type="text/javascript" src="./js/youtube_api/key.js"></script>
+            <script type="text/javascript" src="./js/youtube_api/video_details.js"></script>
+            <script>
+                yt.url_get_info = async function (url) {
+                    var yt_get_url_data = url.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)(?:\/)(?:watch\?v=)?(.{11})(?:.*?)(?:\?t=(\d+))?$/);
+                    if (!yt_get_url_data) return console.error('Invalid YouTube link');
+                    const yt_info_return = await yt.get_info(yt_get_url_data[1]);
+                    if (yt_info_return) console.log(yt_info_return);
+                    else console.error('YouTube video unavailable');
+                }
+            </script>
+        </div>
+    </body>
+</html>
