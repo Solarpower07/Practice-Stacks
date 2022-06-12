@@ -8,21 +8,43 @@
         <div class="navbar">
             
         </div>
-        <div class="mainpage-content">
+        <div class="mainpage-content-dynamic">
+
             <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
-            <a ></a>
+
+            <script type="text/javascript" src="./js/storage/spots.js"></script>
+
+            <script type="text/javascript" src="./js/feedback.js"></script>
+            
             <script type="text/javascript" src="./js/youtube_api/core.js"></script>
-            <input type="url" placeholder="Enter url..." id="add_url_entry">
-            <button onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
             <script type="text/javascript" src="./js/youtube_api/key.js"></script>
             <script type="text/javascript" src="./js/youtube_api/video_details.js"></script>
+
+            <div class="content-box url-spot-entry">
+                <input type="url" class="input-text" placeholder="Enter url here..." id="add_url_entry">
+                <button onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
+                <br>
+                <h2 class="feedback-text-warn" id="feedback-url-input"></h2>
+            </div>
             <script>
+                const feedback_portal = create_feedback_portal('url-input');
+
+                const yt_link_regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)(?:\/)(?:watch\?.*?v=(.{11}).*?)(?:.*?t=(\d+).*?)?$/
+
+                if (!url.match(yt_link_regex)) feedback_portal.post('Link is invalid');
+                else feedback_portal.hide();
+
                 yt.url_get_info = async function (url) {
-                    var yt_get_url_data = url.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)(?:\/)(?:watch\?v=)?(.{11})(?:.*?)(?:\?t=(\d+))?$/);
-                    if (!yt_get_url_data) return console.error('Invalid YouTube link');
+                    var yt_get_url_data = url.match(yt_link_regex);
+                    if (!yt_get_url_data) return feedback_portal.post('Link is invalid');
+                    const [,yt_url_id,yt_url_time] = yt_get_url_data;
+                    let yt_info_get_timeout = setTimeout(() => {
+                        console.warn('Connection is taking a while...');
+                    }, 10000)
                     const yt_info_return = await yt.get_info(yt_get_url_data[1]);
+                    clearTimeout(yt_info_get_timeout);
                     if (yt_info_return) console.log(yt_info_return);
-                    else console.error('YouTube video unavailable');
+                    else feedback_portal.post('YouTube video is unavailable');
                 }
             </script>
         </div>

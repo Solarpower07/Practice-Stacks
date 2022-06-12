@@ -6,10 +6,22 @@
     </head>
     <body>
         <div class="navbar">
-            
+            <div class="navbar-content">
+                <div class="align-right">
+                    <h3><a href="./spots.html" style="color:#fff">Edit stack</a></h3>
+                </div>
+            </div>
         </div>
         <div class="mainpage-content">
-            <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+            <div class="content-box">
+                <h2 class="content_welcome">Welcome back, <a id="uname" href="./setname.html"></a>!</h2>
+                <button class="mainpage-playbutton button-large">▶&nbsp;&nbsp;Play next Stack</button>
+            </div>
+            <script>
+                const uname = localStorage.getItem("uname");
+                if (!uname) window.location.href = './setname.html';
+                else document.getElementById('uname').innerHTML = uname;
+            </script>
         </div>
     </body>
 </html>

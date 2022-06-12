@@ -1,0 +1,14 @@
+.input-text {
+    border: solid 1px #2e4059;
+    color: #fff;
+    background-color: #1f354d;
+    height: 40px;
+    width: 60%;
+    margin: 20px;
+    font-size: 20px;
+    padding: 20px 30px;
+    border-radius: 3px;
+}
+.input-hidden {
+    display: none;
+}

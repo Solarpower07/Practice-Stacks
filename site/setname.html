@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Set Name - Practice Stacks</title>
+        <link rel="stylesheet", href="./themes/core.css">
+        <link rel="stylesheet", href="./themes/button.css">
+    </head>
+    <body>
+        <div class="navbar">
+            
+        </div>
+        <div class="mainpage-content">
+            <script type="text/javascript" src="./js/uname.js"></script>
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('set_name_entry')) uname.setuname(params.get('set_name_entry'),params.get('src') || 'index');
+            </script>
+            <div class="content-box">
+                <h1 class="text-title-setname">What is your name?</h1>
+                <br>
+                <form>
+                    <input class="input-hidden" name="src" id="input-src-hidden">
+                    <input type="text" class="input-text" name="set_name_entry" placeholder="Enter name here...">
+                    <input type="submit" class="button" value="Set name">
+                </form>
+            </div>
+            <script>
+                if (params.get('src')) document.getElementById('input-src-hidden').value = params.get('src');
+            </script>
+        </div>
+    </body>
+</html>

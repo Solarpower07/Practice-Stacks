@@ -1,0 +1,42 @@
+button { 
+    border-radius: 10px;
+    border: solid 1px #98bdc7;
+    color: #fff;
+    background-color: #235896;
+    margin: 20px;
+    padding: 20px 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4e84c2;
+}
+.button { 
+    border-radius: 10px;
+    border: solid 1px #98bdc7;
+    color: #fff;
+    background-color: #235896;
+    margin: 20px;
+    padding: 20px 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.button:hover {
+    background-color: #4e84c2;
+}
+.button-r {
+    border-radius: 10px;
+    border: solid 1px #98bdc7;
+    color: #fff;
+    background-color: #172f49;
+    margin: 20px;
+    padding: 20px 30px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.button-r:hover {
+    background-color: #36597e;
+}
+.button-large {
+    font-size: 25px;
+}
