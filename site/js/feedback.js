@@ -23,7 +23,7 @@ function create_feedback_portal (id) {
     }
 
     elmnt.hide = function (id) {
-        elmnt.innerHTML = "";
+        elmnt.innerHTML = "&nbsp;";
     }
 
     return elmnt;

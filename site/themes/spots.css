@@ -1,0 +1,126 @@
+.spots-list-container {
+    text-align: center;
+}
+.spots-list {
+    display: block;
+    margin-bottom: 50px;
+}
+.spots-list-element {
+    display: inline-block;
+    width: 70%;
+    overflow: hidden;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: #2e4059;
+    text-align: left;
+}
+.spots-list-element-color {
+    display: inline-block;
+    width: 75px;
+    margin-left: 5px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.spots-list-element-color-picker {
+    display: flex;
+    position: absolute;
+    right: 15%;
+    top: 0px;
+    z-index: 2;
+    padding: 8px;
+    background-color: #ffffff;
+    margin: auto;
+    margin-top: 5px;
+    margin-right: 70px;
+}
+.spots-list-element-color-picker-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    padding: auto;
+}
+.spots-list-element-color-picker-choice {
+    display: inline-block;
+    width: 45px;
+    height: 75px;
+    margin: auto;
+    margin: 3px;
+    cursor: pointer;
+}
+.spots-list-element-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.spots-list-element-data-container {
+    display: block;
+    margin: auto;
+    margin-left: 25px;
+    width: 100%;
+    text-align: left;
+}
+.spots-list-element-data {
+    display: block;
+    margin: auto;
+    text-align: left;
+}
+.spots-list-element-data-title {
+    display: inline-block;
+    white-space: nowrap;
+    padding-top: 12px;
+    font-size: 25px;
+    margin: auto;
+    padding-left: 20px;
+}
+.spots-list-element-data-remove {
+    cursor: pointer;
+    font-size: 18px;
+    margin: auto;
+    float: right;
+    margin-right: 30px;
+    margin-top: 3px;
+}
+.spots-list-element-data-remove:hover {
+    color: #c55858;
+}
+.spots-list-element-data-duration {
+    display: inline-block;
+    margin: auto;
+    font-size: 18px;
+}
+.spots-list-element-data-link {
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 12px;
+    font-size: 18px;
+    color: #fff;
+}
+.spots-list-element-data-link:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+.navbar-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.page-title {
+    cursor: default;
+    font-size: 35px;
+}
+.feedback-text-warn {
+    font-size: 20px;
+    color: #c55858;
+    margin: auto;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    float: left;
+    margin-left: 14%;
+}
+.input-field-warn {
+    border: solid 1px #c55858;
+    background-color: #552a2a;
+}
+.hidden {
+    display: none;
+}

@@ -3,16 +3,30 @@
     <head>
         <title>Spots - Practice Stacks</title>
         <link rel="stylesheet", href="./themes/core.css">
+        <link rel="stylesheet", href="./themes/spots.css">
     </head>
     <body>
         <div class="navbar">
-            
+            <div class="navbar-content navbar-content-width-full">
+                <div class="navbar-left">
+                    <h2 class="page-title">Settings</h2>
+                </div>
+                <div style="width: 40%;" class="navbar-space"></div>
+                <div class="navbar-right">
+                    <button class="button-large button-r">Edit Stack</button>
+                    <button class="button-large">▶&nbsp;&nbsp;Play next Stack</button>
+                </div>
+            </div>
         </div>
         <div class="mainpage-content-dynamic">
 
             <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
 
+            <script type="text/javascript" src="./js/storage/data.js"></script>
+            <script type="text/javascript" src="./js/storage/colors.js"></script>
             <script type="text/javascript" src="./js/storage/spots.js"></script>
+
+            <script type="text/javascript" src="./js/algorithms/time.js"></script>
 
             <script type="text/javascript" src="./js/feedback.js"></script>
             
@@ -22,30 +36,89 @@
 
             <div class="content-box url-spot-entry">
                 <input type="url" class="input-text" placeholder="Enter url here..." id="add_url_entry">
-                <button onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
+                <button class="button-r" onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
                 <br>
-                <h2 class="feedback-text-warn" id="feedback-url-input"></h2>
+                <h2 class="feedback-text-warn" id="feedback-url-input">&nbsp;</h2>
             </div>
             <script>
                 const feedback_portal = create_feedback_portal('url-input');
 
-                const yt_link_regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)(?:\/)(?:watch\?.*?v=(.{11}).*?)(?:.*?t=(\d+).*?)?$/
+                const yt_link_regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?.*?v=|youtu\.be\/)(?:(.{11}).*?)(?:.*?t=(\d+).*?)?$/;
 
-                if (!url.match(yt_link_regex)) feedback_portal.post('Link is invalid');
-                else feedback_portal.hide();
+                let url_input_element = document.getElementById('add_url_entry');
 
-                yt.url_get_info = async function (url) {
-                    var yt_get_url_data = url.match(yt_link_regex);
-                    if (!yt_get_url_data) return feedback_portal.post('Link is invalid');
+                let url_input_last_val = url_input_element.value;
+
+                setInterval(function() {
+                    if (url_input_element.value === url_input_last_val) return;
+                    if (!url_input_element.value.match(yt_link_regex) && url_input_element.value !== "") {
+                        feedback_portal.post('Link is invalid');
+                        url_input_element.classList.add('input-field-warn');
+                    }
+                    else {
+                        feedback_portal.hide();
+                        url_input_element.classList.remove('input-field-warn');
+                    }
+                    url_input_last_val = url_input_element.value;
+                }, 50)
+
+                yt.url_get_info = async function () {
+                    var yt_get_url_data = url_input_element.value.match(yt_link_regex);
+                    if (!yt_get_url_data) {
+                        feedback_portal.post('Link is invalid');
+                        url_input_element.classList.add('input-field-warn');
+                        return;
+                    }
+                    feedback_portal.hide();
+                    url_input_element.classList.remove('input-field-warn');
                     const [,yt_url_id,yt_url_time] = yt_get_url_data;
-                    let yt_info_get_timeout = setTimeout(() => {
-                        console.warn('Connection is taking a while...');
-                    }, 10000)
+                    let yt_info_get_timeout = setTimeout(() => {feedback_portal.post('Connection timed out')}, 10000)
                     const yt_info_return = await yt.get_info(yt_get_url_data[1]);
                     clearTimeout(yt_info_get_timeout);
-                    if (yt_info_return) console.log(yt_info_return);
+                    if (yt_info_return) spots.add(yt_url_id,yt_info_return.title,yt_info_return.duration,yt_url_time);
                     else feedback_portal.post('YouTube video is unavailable');
                 }
+            </script>
+
+            <div class="content-box spots-list-container">
+                <div class="content-box spots-list" id="spots-list"></div>
+            </div>
+
+            <script>
+
+                let spots_list = document.getElementById('spots-list');
+
+                spots.on('update', () => {
+
+                    while (spots_list.firstChild) {
+                        spots_list.removeChild(spots_list.firstChild);
+                    }
+
+                    spots.data.forEach((spot,i) => {
+
+                        spots_list.insertAdjacentHTML("beforeend",`
+                            <div class="spots-list-element-container" id="spots-element-container-index-${i}">
+                                <div class="spots-list-element" id="spots-element-index-${i}">
+                                    <div class="spots-list-element-data">
+                                        <div class="spots-list-element-data-container">
+                                            <h3 class="spots-list-element-data spots-list-element-data-duration">${time.get_dhms(spot.cache.duration || 0)}</h3>
+                                            <h2 class="spots-list-element-data-title">${(spot.cache.title.length > 60) ? spot.cache.title.substr(0,60).trim() + "..." : spot.cache.title}</h2>
+                                            <h3 class="spots-list-element-data-remove" onclick="spots.remove(${i})">✖</h3>
+                                        </div>
+                                        <div class="spots-list-element-data-container">
+                                            <a href="https://youtube.com/watch?v=${spot.id}"><h3 class="spots-list-element-data spots-list-element-data-link">https://youtube.com/watch?v=${spot.id}</h3></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="spots-list-element-color", style="background-color:${colors.list[spot.color].hex || colors.default.hex};" onclick="spots.set_color(${i})"></div>
+                            </div>
+                        `)
+                    })
+
+                })
+
+                spots.emit('update');
+
             </script>
         </div>
     </body>

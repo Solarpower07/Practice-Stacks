@@ -1,5 +1,6 @@
 /* Import other required stylesheets */
 
+@import url('./scrollbar.css');
 @import url('./button.css');
 @import url('./input.css');
 @import url('./text.css');
@@ -32,11 +33,18 @@ body {
     left: 0;
     top: 0;
     overflow: hidden;
+    z-index: 1;
 }
 .navbar-content {
-    display: inline-block;
+    display: flex;
+    justify-content: space-evenly;
     width: auto;
-    margin-right: 40px;
+    margin: 40px 0px;
+}
+.navbar-content-width-full {
+    width: 100%;
+    margin: auto;
+    padding: auto;
 }
 .mainpage-content {
     display: flex;
@@ -47,7 +55,7 @@ body {
     min-height: 95vh;
 }
 .mainpage-content-dynamic {
-    margin-top: 100px;
+    margin-top: 150px;
     display: inline-block;
     text-align: center;
     width: 100%;
