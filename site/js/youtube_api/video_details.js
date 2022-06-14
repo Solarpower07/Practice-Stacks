@@ -3,7 +3,7 @@ yt.get_info = async function (id) {
     await $.get(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${yt.api_key}`, (data) => {
         if (data.items.length > 0) out = {
             title: data.items[0].snippet.title
-        }
+        }; else out = false;
     }).fail(() => {console.error('YouTube is currently unavailable')})
     if (out) await $.get(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${id}&key=${yt.api_key}`, (data) => {
         out.duration = data.items[0].contentDetails.duration

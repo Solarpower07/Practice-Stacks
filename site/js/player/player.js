@@ -5,12 +5,12 @@ let player = {
         let stack_low_spot_amount_warn = false;
         
         const stack_color_amounts = colors.ids.map(v => {
-            return data.stack.data.filter((e,i) => (e.color == v)).length;
+            return stack.data.filter((e,i) => (e.color == v)).length;
         })
         
         const color_shuffles = colors.ids.map((v,i) => {
         
-            let spots_color = data.spots.data.filter((e,i) => (e.color == v && !e.unavailable));
+            let spots_color = spots.data.filter((e,i) => (e.color == v && !e.unavailable));
         
             if (spots_color.length == 0) {
                 if (stack_color_amounts[i] > 0) throw Error(`No elements of color ID ${i} to add to stack`);
@@ -36,7 +36,7 @@ let player = {
         
         let counts = colors.ids.map(()=>{return 0});
         
-        let playlist = data.stack.data.map(v => {return colors.ids.indexOf(v.color)}).map((v,i) => {
+        let playlist = stack.data.map(v => {return colors.ids.indexOf(v.color)}).map((v,i) => {
             
             counts[v]++;
         

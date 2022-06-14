@@ -35,6 +35,8 @@
             <script type="text/javascript" src="./js/youtube_api/key.js"></script>
             <script type="text/javascript" src="./js/youtube_api/video_details.js"></script>
 
+            <script type="text/javascript" src="./js/storage/cache_reload.js"></script>
+
             <div class="content-box url-spot-entry">
                 <input type="url" class="input-text" placeholder="Enter url here..." id="add_url_entry">
                 <button class="button-r" onclick="yt.url_get_info(document.getElementById('add_url_entry').value)">Add spot</button>
@@ -95,14 +97,9 @@
                         spots_list.removeChild(spots_list.firstChild);
                     }
 
-                    spots.data.filter((e) => !e.unavailable).forEach(async (spot,i) => {
+                    spots.data.forEach(async (spot,i) => {
 
-                        /* if (spot.cache == null) {
-                            let yt_info_get_timeout = setTimeout(() => {return}, 5000)
-                            const yt_info_return = await yt.get_info(spot.id).catch();
-                            clearTimeout(yt_info_get_timeout);
-                            if (!yt_info_return) return spot.unavailable = true;
-                        } */
+                        if (spot.unavailable) return;
 
                         spots_list.insertAdjacentHTML("beforeend",`
                             <div class="spots-list-element-container" id="spots-element-container-index-${i}">
@@ -110,7 +107,7 @@
                                     <div class="spots-list-element-data">
                                         <div class="spots-list-element-data-container">
                                             <h3 class="spots-list-element-data spots-list-element-data-duration">${time.get_dhms((!spot.cache) ? 0 : (spot.cache.duration || 0))}</h3>
-                                            <h2 class="spots-list-element-data-title">${(!spot.cache) ? 'Unknown (cache was cleared)' : (spot.cache.title.length > 60) ? spot.cache.title.substr(0,60).trim() + "..." : spot.cache.title}</h2>
+                                            <h2 class="spots-list-element-data-title">${(!spot.cache) ? 'Refreshing... (cache was cleared)' : (spot.cache.title.length > 60) ? spot.cache.title.substr(0,60).trim() + "..." : spot.cache.title}</h2>
                                             <h3 class="spots-list-element-data-remove" onclick="spots.remove(${i})">✖</h3>
                                         </div>
                                         <div class="spots-list-element-data-container">
@@ -126,6 +123,8 @@
                 })
 
                 spots.emit('update');
+
+                spots.cache_reload();
 
             </script>
         </div>

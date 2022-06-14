@@ -25,7 +25,7 @@ spots.add = function (id,title,duration,start) {
 
 spots.compress_data = function () {
 
-    let copy = new Array(...this.data);
+    let copy = JSON.parse(JSON.stringify(this.data));
 
     return copy.map((v) => {
         delete v.cache;

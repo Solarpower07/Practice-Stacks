@@ -29,6 +29,8 @@
             <script type="text/javascript" src="./js/storage/data.js"></script>
             <script type="text/javascript" src="./js/storage/colors.js"></script>
 
+            <script>let spots = data.spots; let stack = data.stack;</script>
+
             <script type="text/javascript" src="./js/algorithms/time.js"></script>
 
             <script type="text/javascript" src="./js/shuffle.js"></script>
@@ -38,6 +40,8 @@
             <script type="text/javascript" src="./js/youtube_api/core.js"></script>
             <script type="text/javascript" src="./js/youtube_api/key.js"></script>
             <script type="text/javascript" src="./js/youtube_api/video_details.js"></script>
+
+            <script type="text/javascript" src="./js/storage/cache_reload.js"></script>
 
             <div class="content-box player-stack-list">
                 <div class="content-box spots-list" id="spots-list">
@@ -75,6 +79,8 @@
                 document.getElementById('player-spot-plural').innerHTML = (shuffle_list.length == 1) ? '' : 's';
 
                 document.getElementById('player-duration').innerHTML = time.get_dhms(shuffle_list.map((v)=>{return (v.cache && v.cache.duration) ? v.cache.duration : 0}).reduce((a,b) => a + b));
+
+                spots.cache_reload();
 
             </script>
 

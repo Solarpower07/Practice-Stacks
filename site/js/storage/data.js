@@ -9,7 +9,7 @@ function data_values_check (v) {
 let data = {
     save: function () {
 
-        data_keys = Object.keys(data).filter(v => data_values_check(v));
+        data_keys = Object.keys(data).filter(data_values_check);
 
         data_keys.forEach(s => {
             data[s].save();
