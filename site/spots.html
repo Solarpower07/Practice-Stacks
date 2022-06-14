@@ -76,6 +76,7 @@
                         url_input_element.classList.add('input-field-warn');
                         return;
                     }
+                    url_input_element.value = "";
                     feedback_portal.hide();
                     url_input_element.classList.remove('input-field-warn');
                     const [,yt_url_id,yt_url_time] = yt_get_url_data;

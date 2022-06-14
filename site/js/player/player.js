@@ -132,7 +132,7 @@ let player = {
             
             player.yt_player_iframe.setAttribute('enablejsapi',true);
         
-            player.yt_player_iframe.setAttribute('src','https://www.youtube.com/embed/' + player.now_playing.id + '?origin=http://127.0.0.1:5500&enablejsapi=1&autoplay=1&t=' + (player.now_playing.start || 0));
+            player.yt_player_iframe.setAttribute('src','https://www.youtube.com/embed/' + player.now_playing.id + '?enablejsapi=1&autoplay=1&t=' + (player.now_playing.start || 0));
         
             yt_player_container.appendChild(player.yt_player_iframe);
         

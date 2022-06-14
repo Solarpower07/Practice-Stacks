@@ -4,7 +4,7 @@ spots.add = function (id,title,duration,start) {
 
     if (id == null || title == null || duration == null) return;
 
-    spots.data.push({
+    spots.data.unshift({
 
         id,
 
