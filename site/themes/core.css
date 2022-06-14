@@ -39,7 +39,16 @@ body {
     display: flex;
     justify-content: space-evenly;
     width: auto;
-    margin: 40px 0px;
+    margin: 15px 20px;
+}
+.page-title {
+    cursor: default;
+    font-size: 35px;
+}
+.navbar-link {
+    display: inline-block;
+    font-size: 22px;
+    margin: 15px;
 }
 .navbar-content-width-full {
     width: 100%;
@@ -64,4 +73,7 @@ body {
 .content-box {
     width: 100%;
     display: inline-block;
+}
+.hidden {
+    display: none;
 }

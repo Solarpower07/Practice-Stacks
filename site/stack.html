@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Stack - Practice Stacks</title>
+        <link rel="stylesheet", href="./themes/core.css">
+        <link rel="stylesheet", href="./themes/stack.css">
+    </head>
+    <body>
+        <div class="navbar">
+            <div class="navbar-content navbar-content-width-full">
+                <div class="navbar-left">
+                    <h2 class="page-title">Settings</h2>
+                </div>
+                <div style="width: calc(80% - 750px);" class="navbar-space"></div>
+                <div class="navbar-right">
+                    <h3 class="navbar-link"><a href="./index.html" style="color:#fff">Back to Home</a></h3>
+                    <a href="./spots.html"><button class="bbutton-r">Edit Spots</button></a>
+                    <a href="./player.html"><button>▶&nbsp;&nbsp;Play next Stack</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="mainpage-content-dynamic">
+
+            <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+
+            <script type="text/javascript" src="./js/storage/data.js"></script>
+            <script type="text/javascript" src="./js/storage/colors.js"></script>
+            <script type="text/javascript" src="./js/storage/spots.js"></script>
+            <script type="text/javascript" src="./js/storage/stack.js"></script>
+
+            <div class="content-box stack-list-container">
+                <div class="content-box stack-list" id="stack-list"></div>
+                <button class="button-r stack-list-button" onclick="stack.add()">Add spot</button>
+            </div>
+
+            <script>
+
+                let stack_list = document.getElementById('stack-list');
+
+                stack.on('update', () => {
+
+                    while (stack_list.firstChild) {
+                        stack_list.removeChild(stack_list.firstChild);
+                    }
+
+                    stack.data.forEach((stack,i) => {
+
+                        stack_list.insertAdjacentHTML("beforeend",`
+                            <div class="stack-list-element-container" id="stack-element-container-index-${i}">
+                                <div class="stack-list-element" id="stack-element-index-${i}" style="background-color: ${colors.list[stack.color].hex}" onclick="stack.set_color(${i})">
+                                    <h3 class="spots-list-element-data-remove" onclick="stack.remove(${i})">✖</h3>
+                                </div>
+                            </div>
+                        `)
+                    })
+
+                })
+
+                stack.emit('update');
+
+            </script>
+        </div>
+    </body>
+</html>

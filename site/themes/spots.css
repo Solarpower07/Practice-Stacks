@@ -43,7 +43,6 @@
     display: inline-block;
     width: 45px;
     height: 75px;
-    margin: auto;
     margin: 3px;
     cursor: pointer;
 }
@@ -104,10 +103,6 @@
     flex-direction: column;
     justify-content: center;
 }
-.page-title {
-    cursor: default;
-    font-size: 35px;
-}
 .feedback-text-warn {
     font-size: 20px;
     color: #c55858;
@@ -115,12 +110,9 @@
     margin-top: -10px;
     margin-bottom: 10px;
     float: left;
-    margin-left: 14%;
+    margin-left: calc(20% - 120px);
 }
 .input-field-warn {
     border: solid 1px #c55858;
     background-color: #552a2a;
-}
-.hidden {
-    display: none;
 }

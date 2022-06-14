@@ -23,6 +23,17 @@ spots.add = function (id,title,duration,start) {
 
 }
 
+spots.compress_data = function () {
+
+    let copy = new Array(...this.data);
+
+    return copy.map((v) => {
+        delete v.cache;
+        return v;
+    })
+
+}
+
 spots.change_color = function (id,color) {
 
     spots.picking_color = null;
@@ -30,6 +41,8 @@ spots.change_color = function (id,color) {
     if (id == null || color == null) return;
 
     spots.data[id].color = color;
+
+    spots.remove_picker(id);
 
     spots.emit('update');
 
@@ -93,8 +106,8 @@ spots.remove = function (index) {
 
     if (index != null) spots.data.splice(index,1);
 
-    spots.emit('update');
-
     if (spots.picking_color == index) spots.picking_color = null;
+
+    spots.emit('update');
 
 }

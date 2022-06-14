@@ -11,6 +11,8 @@ let colors = {
 
 colors.default = 0,
 
+colors.ids = colors.list.map((v,i) => {return i}),
+
 colors.random = function () {
     return Math.floor(Math.random()*colors.list.length);
 }
