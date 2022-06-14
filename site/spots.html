@@ -44,6 +44,10 @@
                 <h2 class="feedback-text-warn" id="feedback-url-input">&nbsp;</h2>
             </div>
             <script>
+
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('stack_incomplete')) alert('You do not have any spots associated with one or more\nof the colors your stack is attempting to use!');
+
                 const feedback_portal = create_feedback_portal('url-input');
 
                 const yt_link_regex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?.*?v=|youtu\.be\/)(?:(.{11}).*?)(?:.*?t=(\d+).*?)?$/;

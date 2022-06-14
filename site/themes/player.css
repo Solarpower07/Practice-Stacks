@@ -1,0 +1,19 @@
+.player-spot {
+    background-color: #223043;
+    width: 100%;
+    margin-left: -10px;
+}
+.player-container {
+    background-color: #223043;
+    width: 70%;
+    display: inline-block;
+    margin: auto;
+    padding: 20px;
+}
+.player-container-inner {
+    width: 90%;
+}
+.video-iframe {
+    width: 850px;
+    height: 480px;
+}

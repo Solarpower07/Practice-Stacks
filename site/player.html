@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Set Name - Practice Stacks</title>
+        <title>Player - Practice Stacks</title>
         <link rel="stylesheet", href="./themes/core.css">
         <link rel="stylesheet", href="./themes/spots.css">
+        <link rel="stylesheet", href="./themes/player.css">
         <style>
             .navbar-right {
                 display: flex;
@@ -26,6 +27,8 @@
         </div>
         <div class="mainpage-content-dynamic">
 
+            <script language="JavaScript" type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+
             <script type="text/javascript" src="./js/storage/data.js"></script>
             <script type="text/javascript" src="./js/storage/colors.js"></script>
 
@@ -43,7 +46,16 @@
 
             <script type="text/javascript" src="./js/storage/cache_reload.js"></script>
 
-            <div class="content-box player-stack-list">
+            <div class="content-box player-stack-list" id="player-content-box">
+                <div class="content-box player-container" id="player-container" style="display: none;">
+                    <div class="player-container player-container-inner" id="yt-player-container">
+    
+                    </div>
+                    <div class="spots-list-element player-spot" id="player-spot">
+    
+                    </div>
+                </div>
+                <button onclick="shuffle_list.play_next(shuffle_list.shift())" id="play-button">Play next</button>
                 <div class="content-box spots-list" id="spots-list">
 
                 </div>
@@ -51,36 +63,80 @@
 
             <script>
 
-                let spots_list = document.getElementById('spots-list');
+                let spots_list, shuffle_list;
 
-                let shuffle_list = player.get_shuffled_list();
+                function onYouTubeIframeAPIReady () {
 
-                shuffle_list.forEach(async (spot,i) => {
+                    spots_list = document.getElementById('spots-list');
 
-                    spots_list.insertAdjacentHTML("beforeend",`
-                        <div class="spots-list-element-container" id="spots-element-container-index-${i}">
-                            <div class="spots-list-element" id="spots-element-index-${i}">
-                                <div class="spots-list-element-data">
-                                    <div class="spots-list-element-data-container">
-                                        <h3 class="spots-list-element-data spots-list-element-data-duration">${time.get_dhms((!spot.cache) ? 0 : (spot.cache.duration || 0))}</h3>
-                                        <h2 class="spots-list-element-data-title">${(!spot.cache) ? 'Unknown (cache was cleared)' : (spot.cache.title.length > 60) ? spot.cache.title.substr(0,60).trim() + "..." : spot.cache.title}</h2>
-                                    </div>
-                                    <div class="spots-list-element-data-container">
-                                        <a href="https://youtube.com/watch?v=${spot.id}"><h3 class="spots-list-element-data spots-list-element-data-link">https://youtube.com/watch?v=${spot.id}</h3></a>
+                    shuffle_list = player.get_shuffled_list();
+
+                    shuffle_list.on('refresh', () => {
+                    
+                        if (shuffle_list.length == 0) {
+                        
+                            let player_content_box = document.getElementById('player-content-box');
+                        
+                            let spots_list = document.getElementById('spots-list');
+                        
+                            let play_button = document.getElementById('play-button');
+                        
+                            if (spots_list != null) player_content_box.removeChild(spots_list);
+                        
+                            if (play_button != null) player_content_box.removeChild(play_button);
+                        
+                            if (player.now_playing == null) shuffle_list.emit('done');
+                        
+                            return;
+                        }
+                    
+                        while (spots_list.firstChild) {
+                            spots_list.removeChild(spots_list.firstChild);
+                        }
+                    
+                        shuffle_list.forEach(async (spot,i) => {
+                        
+                            spots_list.insertAdjacentHTML("beforeend",`
+                                <div class="spots-list-element-container" id="spots-element-container-index-${i}">
+                                    <div class="spots-list-element" id="spots-element-index-${i}">
+                                        <div class="spots-list-element-data">
+                                            <div class="spots-list-element-data-container">
+                                                    <h3 class="spots-list-element-data spots-list-element-data-duration">${time.get_dhms((!spot.cache) ? 0 : (spot.cache.duration || 0))}</h3>
+                                                    <h2 class="spots-list-element-data-title">${(!spot.cache) ? 'Refreshing... (cache was cleared)' : (spot.cache.title.length > 60) ? spot.cache.title.substr(0,60).trim() + "..." : spot.cache.title}</h2>
+                                                    <h3 class="spots-list-element-data-remove" onclick="shuffle_list.remove(${i})">✖</h3>
+                                            </div>
+                                            <div class="spots-list-element-data-container">
+                                                <a href="https://youtube.com/watch?v=${spot.id}"><h3 class="spots-list-element-data spots-list-element-data-link">https://youtube.com/watch?v=${spot.id}</h3></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    `)
-                })
+                            `)
+                        })
+                    
+                        document.getElementById('player-current-count').innerHTML = shuffle_list.length + (player.now_playing != null ? 1 : 0);
+                    
+                        document.getElementById('player-spot-plural').innerHTML = (shuffle_list.length + (player.now_playing != null ? 1 : 0) == 1) ? '' : 's';
+                    
+                        document.getElementById('player-duration').innerHTML = time.get_dhms(shuffle_list.map((v)=>{return (v.cache && v.cache.duration) ? v.cache.duration : 0}).reduce((a,b) => a + b) + (player.now_playing != null && player.now_playing.cache ? (player.now_playing.cache.duration || 0) : 0));
+                    
+                    })
 
-                document.getElementById('player-current-count').innerHTML = shuffle_list.length;
+                    shuffle_list.emit('refresh');
 
-                document.getElementById('player-spot-plural').innerHTML = (shuffle_list.length == 1) ? '' : 's';
+                    spots.cache_reload().then(() => shuffle_list.emit('refresh'));
 
-                document.getElementById('player-duration').innerHTML = time.get_dhms(shuffle_list.map((v)=>{return (v.cache && v.cache.duration) ? v.cache.duration : 0}).reduce((a,b) => a + b));
+                    shuffle_list.on('done', () => {
+                        location.href = './finished.html';
+                    })
 
-                spots.cache_reload();
+                }
+            
+                //Video API
+                const tag = document.createElement("script");
+                tag.src = "https://www.youtube.com/iframe_api";
+                const [firstScriptTag] = document.getElementsByTagName("script");
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
             </script>
 

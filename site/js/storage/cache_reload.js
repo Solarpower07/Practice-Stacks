@@ -1,4 +1,4 @@
-spots.cache_reload = function (force) {
+spots.cache_reload = async function (force) {
 
     let changed = false;
 
