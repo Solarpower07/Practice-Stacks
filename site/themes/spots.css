@@ -70,6 +70,7 @@
     font-size: 25px;
     margin: auto;
     padding-left: 20px;
+    max-width: 80%;
 }
 .spots-list-element-data-remove {
     cursor: pointer;
