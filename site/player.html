@@ -64,6 +64,15 @@
 
             <script>
 
+                $(document).keyup(function(event) {
+                    if(event.which === 32) {
+                        if (player.yt_player == null) return;
+                        event.preventDefault();
+                        if (player.yt_player.getPlayerState() === 1) player.yt_player.pauseVideo();
+                        else if (player.yt_player.getPlayerState() === 2) player.yt_player.playVideo();
+                    }
+                })
+
                 let spots_list, shuffle_list;
 
                 function onYouTubeIframeAPIReady () {
