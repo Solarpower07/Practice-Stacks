@@ -138,9 +138,6 @@ let player = {
         
             player.yt_player = new YT.Player("player", {
                 events: {
-                    onReady: (event) => {
-                        player.playVideo();
-                    },
                     onStateChange: (event) => {
                         if (event.data == YT.PlayerState.ENDED) {
                             playlist.play_next(playlist.shift());

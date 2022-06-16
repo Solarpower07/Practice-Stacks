@@ -102,6 +102,12 @@
                             if (play_button != null) player_content_box.removeChild(play_button);
                         
                             if (player.now_playing == null) shuffle_list.emit('done');
+                    
+                            document.getElementById('player-current-count').innerHTML = 1;
+                
+                            document.getElementById('player-spot-plural').innerHTML = 's';
+                
+                            document.getElementById('player-duration').innerHTML = time.get_dhms(player.now_playing.cache && player.now_playing.cache.duration ? ((player.now_playing.stop ? player.now_playing.stop : player.now_playing.cache.duration) - (player.now_playing.start || 0)) : 0);
                         
                             return;
                         }
@@ -134,7 +140,7 @@
                     
                         document.getElementById('player-spot-plural').innerHTML = (shuffle_list.length + (player.now_playing != null ? 1 : 0) == 1) ? '' : 's';
                     
-                        document.getElementById('player-duration').innerHTML = time.get_dhms(shuffle_list.map((v)=>{return (v.cache && v.cache.duration) ? v.cache.duration : 0}).reduce((a,b) => a + b) + (player.now_playing != null && player.now_playing.cache ? (player.now_playing.cache.duration || 0) : 0));
+                        document.getElementById('player-duration').innerHTML = time.get_dhms(shuffle_list.map((v)=>{return (v.cache && v.cache.duration) ? ((v.stop ? v.stop : v.cache.duration) - (v.start || 0)) : 0}).reduce((a,b) => a + b) + (player.now_playing != null && player.now_playing.cache && player.now_playing.cache.duration ? ((player.now_playing.stop ? player.now_playing.stop : player.now_playing.cache.duration) - (player.now_playing.start || 0)) : 0));
                     
                     })
 
