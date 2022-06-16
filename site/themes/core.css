@@ -25,7 +25,7 @@ body {
     width: 100%;
     padding: 10px 0 10px 0;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     text-align: center;
     position: fixed;
     height: auto;
@@ -35,16 +35,20 @@ body {
     overflow: hidden;
     z-index: 1;
 }
+.navbar button {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 .navbar-content {
     display: flex;
     justify-content: space-evenly;
     width: auto;
-    margin: 15px 20px;
-    z-index: 3;
+    margin: 15px 60px;
 }
 .page-title {
     cursor: default;
     font-size: 35px;
+    margin: 15px;
 }
 .navbar-link {
     display: inline-block;
@@ -57,17 +61,8 @@ body {
     margin: auto;
 }
 .navbar-logo-container {
-    margin: auto;
-    width: 100%;
-    z-index: 2.5;
-    position: fixed;
-    padding-top: 20px;
-}
-.navbar-content-width-full {
-    width: 100%;
-    margin: auto;
-    padding: auto;
-    float: center;
+    padding: 20px 0;
+    margin-left: 60px;
 }
 .mainpage-content {
     display: flex;
