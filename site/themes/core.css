@@ -40,6 +40,7 @@ body {
     justify-content: space-evenly;
     width: auto;
     margin: 15px 20px;
+    z-index: 3;
 }
 .page-title {
     cursor: default;
@@ -50,10 +51,23 @@ body {
     font-size: 22px;
     margin: 15px;
 }
+.navbar-logo {
+    height: 48px;
+    width: auto;
+    margin: auto;
+}
+.navbar-logo-container {
+    margin: auto;
+    width: 100%;
+    z-index: 2.5;
+    position: fixed;
+    padding-top: 20px;
+}
 .navbar-content-width-full {
     width: 100%;
     margin: auto;
     padding: auto;
+    float: center;
 }
 .mainpage-content {
     display: flex;

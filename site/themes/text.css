@@ -18,9 +18,8 @@ h3 {
 a {
     text-decoration: none;
     cursor: pointer;
-    color: #71aaff;
+    color: #ffffff;
 }
 a:hover {
-    color: #b5d2fd;
     text-decoration: underline;
 }
